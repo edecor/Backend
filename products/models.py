@@ -14,14 +14,14 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    name = models.CharField(max_length=400)
-    slug = models.SlugField(max_length=200)
+    name = models.CharField(max_length=400, db_index=True)
+    slug = models.SlugField(max_length=200, db_index=True)
     categories = models.ManyToManyField(
         Category,
         related_name="categories",
         related_query_name="category",
     )
-    description = models.TextField()
+    description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
