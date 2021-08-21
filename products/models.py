@@ -1,5 +1,5 @@
 from django.db import models
-from django.db.models import indexes
+from versatileimagefield.fields import VersatileImageField
 
 
 class Category(models.Model):
@@ -33,3 +33,14 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(
+        Product, on_delete=models.CASCADE, related_name="images"
+    )
+    image = VersatileImageField(upload_to="products", blank=True, null=True)
+    alt = models.CharField(max_length=128, blank=True)
+
+    def get_images(self):
+        return self.product.images.all()
