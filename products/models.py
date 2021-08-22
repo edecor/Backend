@@ -34,6 +34,10 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def image_count(self):
+        return self.images.count()
+
 
 class ProductImage(models.Model):
     product = models.ForeignKey(
