@@ -40,7 +40,7 @@ class ProductImage(models.Model):
         Product, on_delete=models.CASCADE, related_name="images"
     )
     image = VersatileImageField(upload_to="products", blank=True, null=True)
-    alt = models.CharField(max_length=128, blank=True)
+    alt = models.CharField(max_length=128)
 
-    def get_images(self):
-        return self.product.images.all()
+    def __str__(self):
+        return self.alt
