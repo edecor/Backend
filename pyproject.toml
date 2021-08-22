@@ -12,6 +12,8 @@ python-decouple = "^3.4"
 djangorestframework = "^3.12.4"
 Pillow = "^8.3.1"
 django-versatileimagefield = "^2.1"
+django-cors-headers = "^3.8.0"
+djangorestframework-simplejwt = "^4.8.0"
 
 [tool.poetry.dev-dependencies]
 
