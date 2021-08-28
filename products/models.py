@@ -43,7 +43,7 @@ class ProductImage(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images"
     )
-    image = VersatileImageField(upload_to="products", blank=True, null=True)
+    image = VersatileImageField(upload_to="products")
     alt = models.CharField(max_length=128)
 
     def __str__(self):
