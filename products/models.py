@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from versatileimagefield.fields import VersatileImageField
 
@@ -26,6 +27,7 @@ class Product(models.Model):
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
 
     class Meta:
         ordering = ["name"]
@@ -43,7 +45,7 @@ class ProductImage(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images"
     )
-    image = VersatileImageField(upload_to="products")
+    image = VersatileImageField(upload_to="products", default="default_img.jpg")
     alt = models.CharField(max_length=128)
 
     def __str__(self):
