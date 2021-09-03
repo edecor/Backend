@@ -8,7 +8,7 @@ class ProductListView(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = [filters.OrderingFilter]
-    ordering = ["-id"]
+    ordering = ["-updated"]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
