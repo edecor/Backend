@@ -1,10 +1,12 @@
 FROM python:3.9-slim-buster
 
-ENV PYTHONFAULTHANDLER=1 \
+ARG DJANGO_ENV
+
+ENV DJANGO_ENV=${DJANGO_ENV} \
+    PYTHONFAULTHANDLER=1 \
     PYTHONHASHSEED=random \
     PYTHONDONTWRITEBYTECODE=1 \
     DOCKERIZE_VERSION=v0.6.1 \
-    # POETRY_VERSION=1.1.8 \
     PATH="$PATH:/root/.local/bin" 
 
 RUN apt-get update && apt-get upgrade -y \
@@ -25,17 +27,13 @@ WORKDIR /code
 
 COPY ./entrypoint.sh /docker-entrypoint.sh
 
-RUN chmod +x '/docker-entrypoint.sh' \
-    && groupadd -r web && useradd -d /code -r -g web web \
-    && chown web:web -R /code \
-    && mkdir -p /var/www/django/static /var/www/django/media \
-    && chown web:web /var/www/django/static /var/www/django/media
-
-COPY --chown=web:web ./poetry.lock ./pyproject.toml /code/
+COPY ./poetry.lock ./pyproject.toml /code/
 
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-ansi
-
-USER web 
+    && poetry install \
+    $(if [ "$DJANGO_ENV" = 'production' ]; then echo '--no-dev'; fi) \
+    --no-interaction --no-ansi \
+    && if [ "$DJANGO_ENV" = 'production' ]; then rm -rf "$POETRY_CACHE_DIR"; fi \
+    && mkdir -p /var/www/django/static /var/www/django/media 
 
 ENTRYPOINT ["/docker-entrypoint.sh" ]
