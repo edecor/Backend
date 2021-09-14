@@ -1,0 +1,12 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: .
+      args:
+        DJANGO_ENV: production
+    depends_on:
+      - db
+    env_file: ./config/.env
+    command: python /code/manage.py runserver --settings=core.settings.production 0.0.0.0:8000

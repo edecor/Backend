@@ -37,3 +37,6 @@ RUN poetry config virtualenvs.create false \
     && mkdir -p /var/www/django/static /var/www/django/media 
 
 ENTRYPOINT ["/docker-entrypoint.sh" ]
+
+# test for production, 
+# COPY . /code
