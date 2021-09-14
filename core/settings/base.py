@@ -5,7 +5,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-config = AutoConfig(search_path=BASE_DIR)
+config = AutoConfig(search_path=BASE_DIR.joinpath("config"))
 
 SECRET_KEY = config("DJANGO_SECRET_KEY")
 
