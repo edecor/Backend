@@ -18,7 +18,7 @@ services:
     depends_on:
       - db
     env_file: .env
-    command: python /code/manage.py runserver 0.0.0.0:8000
+    command: python /code/manage.py runserver --settings=core.settings.local 0.0.0.0:8000
 
 volumes:
   pgdata:
