@@ -7,7 +7,16 @@ services:
       args:
         DJANGO_ENV: production
     env_file: ./config/.env
-    # command: gunicorn --env DJANGO_SETTINGS_MODULE=core.settings.production core.wsgi -b 0.0.0.0:8000
+    # command: gunicorn core.wsgi -b 0.0.0.0:8000
     command: sh ./gunicorn.sh
+    environment: 
+      - DJANGO_SETTINGS_MODULE=core.settings.production
+    expose: 
+      - 8000
+
+  nginx:
+    build: ./config/nginx
     ports:
-      - "8000:8000" # test
+      - "80:80"
+    depends_on:
+      - web
