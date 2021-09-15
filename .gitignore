@@ -4,4 +4,3 @@ __pycache__
 pgdata
 try*.py
 media
-config
