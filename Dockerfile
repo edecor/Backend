@@ -36,7 +36,7 @@ RUN poetry config virtualenvs.create false \
     && if [ "$DJANGO_ENV" = 'production' ]; then rm -rf "$POETRY_CACHE_DIR"; fi \
     && mkdir -p /var/www/django/static /var/www/django/media 
 
-ENTRYPOINT ["/docker-entrypoint.sh" ]
-
 # test for production, 
-# COPY . /code
+COPY . /code
+
+ENTRYPOINT ["/docker-entrypoint.sh" ]
