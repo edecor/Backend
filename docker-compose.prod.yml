@@ -6,7 +6,8 @@ services:
       context: .
       args:
         DJANGO_ENV: production
-    depends_on:
-      - db
     env_file: ./config/.env
-    command: python /code/manage.py runserver --settings=core.settings.production 0.0.0.0:8000
+    # command: gunicorn --env DJANGO_SETTINGS_MODULE=core.settings.production core.wsgi -b 0.0.0.0:8000
+    command: sh ./gunicorn.sh
+    ports:
+      - "8000:8000" # test
