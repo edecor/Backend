@@ -6,8 +6,7 @@ services:
       context: .
       args:
         DJANGO_ENV: production
-      target:
-        - production_build
+      target: production_build
     env_file: ./config/.env
     # command: gunicorn core.wsgi -b 0.0.0.0:8000
     command: sh ./gunicorn.sh
