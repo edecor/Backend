@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "allauth.socialaccount",
     "dj_rest_auth.registration",
     "corsheaders",
+    "storages",
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
