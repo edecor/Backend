@@ -7,6 +7,8 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     env_file: ./config/.env
+    ports:
+      - "5433:5432"
 
   web:
     build:
@@ -23,6 +25,12 @@ services:
     command: python /code/manage.py runserver 0.0.0.0:8000
     environment:
       - DJANGO_SETTINGS_MODULE=core.settings.local
+    ports:
+      # We only bind ports directly in development:
+      - "8000:8000"
+    volumes:
+      # We only mount source code in development:
+      - .:/code
 
 volumes:
   pgdata:
