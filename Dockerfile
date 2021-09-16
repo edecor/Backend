@@ -1,4 +1,4 @@
-FROM python:3.9-slim-buster
+FROM python:3.9-slim-buster as development_build
 
 ARG DJANGO_ENV
 
@@ -33,10 +33,10 @@ RUN poetry config virtualenvs.create false \
     && poetry install \
     $(if [ "$DJANGO_ENV" = 'production' ]; then echo '--no-dev'; fi) \
     --no-interaction --no-ansi \
-    && if [ "$DJANGO_ENV" = 'production' ]; then rm -rf "$POETRY_CACHE_DIR"; fi \
-    && mkdir -p /var/www/django/static /var/www/django/media 
-
-# test for production, 
-COPY . /code
+    && if [ "$DJANGO_ENV" = 'production' ]; then rm -rf "$POETRY_CACHE_DIR"; fi 
 
 ENTRYPOINT ["/docker-entrypoint.sh" ]
+
+FROM development_build as production_build
+
+COPY . /code
