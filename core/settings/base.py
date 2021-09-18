@@ -2,7 +2,6 @@ from pathlib import Path
 from decouple import AutoConfig
 import os
 
-
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 config = AutoConfig(search_path=BASE_DIR.joinpath("config"))
@@ -31,6 +30,8 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     "corsheaders",
     "storages",
+    "ckeditor",
+    "ckeditor_uploader",
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"

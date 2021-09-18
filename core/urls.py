@@ -10,6 +10,7 @@ urlpatterns = [
     path("api-auth/", include("rest_framework.urls")),
     path("api/dj-rest-auth/", include("dj_rest_auth.urls")),
     path("api/dj-rest-auth/registration", include("dj_rest_auth.registration.urls")),
+    path("ckeditor/", include("ckeditor_uploader.urls")),
 ]
 
 if settings.DEBUG:
