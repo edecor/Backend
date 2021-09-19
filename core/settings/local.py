@@ -9,6 +9,11 @@ ALLOWED_HOSTS = [
     "[::1]",
 ]
 
+INSTALLED_APPS += [
+    "ckeditor",
+    "ckeditor_uploader",
+]
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
