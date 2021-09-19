@@ -4,3 +4,4 @@ docker-compose.override.yml
 docker-compose.prod.yml
 .gitignore
 __pycache__
+copilot.exe
