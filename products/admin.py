@@ -34,6 +34,6 @@ class ProductAdmin(admin.ModelAdmin):
         "available",
     ]
 
-    formfield_overrides = {
-        models.TextField: {"widget": CKEditorUploadingWidget()},
-    }
+    # formfield_overrides = {
+    #     models.TextField: {"widget": CKEditorUploadingWidget()},
+    # }
