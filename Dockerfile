@@ -40,3 +40,7 @@ ENTRYPOINT ["/docker-entrypoint.sh" ]
 FROM development_build as production_build
 
 COPY . /code
+
+EXPOSE 8000
+
+CMD [ "sh", "./gunicorn.sh" ]

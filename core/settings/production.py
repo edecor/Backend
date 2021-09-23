@@ -1,13 +1,12 @@
 from .base import *
 
-DEBUG = False
+# DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
-    # config("DOMAIN_NAME")
+    config("TEMP_EDECOR_DOMAIN"),
     "localhost",
-    "0.0.0.0",
     "127.0.0.1",
-    "[::1]",
 ]
 
 # Database
