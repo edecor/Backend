@@ -2,6 +2,7 @@ from .serializers import ProductSerializer
 from .models import Product
 from rest_framework import generics, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django.http import HttpResponse
 
 
 class ProductListView(generics.ListCreateAPIView):
@@ -17,3 +18,7 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ProductSerializer
     lookup_field = "slug"
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+def tempOKview(request):
+    return HttpResponse("hi")
