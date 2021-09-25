@@ -5,7 +5,6 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path("admin/", admin.site.urls),
     path("api/", include("products.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("api/dj-rest-auth/", include("dj_rest_auth.urls")),
@@ -15,4 +14,12 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += [
+        path("admin/", admin.site.urls),
+        *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
+    ]
+
+if not settings.DEBUG:
+    urlpatterns += [
+        path("orEifasjfasdfaslas/", admin.site.urls),
+    ]
