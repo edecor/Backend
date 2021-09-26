@@ -29,11 +29,10 @@ export DJANGO_SETTINGS_MODULE=core.settings.production
 # Concerning `workers` setting see:
 # https://github.com/wemake-services/wemake-django-template/issues/1022
 
-exec gunicorn core.wsgi 
+exec gunicorn core.wsgi -b 0.0.0.0:8000
   --workers=4 `# Sync worker settings` \
   --max-requests=2000 \
   --max-requests-jitter=400 \
-  --bind 0.0.0.0:8000 \
   # --chdir='/code'       `# Locations` \
   --log-file=- \
   --worker-tmp-dir='/dev/shm'
