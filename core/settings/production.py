@@ -6,6 +6,7 @@ DEBUG = True
 ALLOWED_HOSTS = [
     config("TEMP_EDECOR_DOMAIN"),
     config("AWS_EC2_IP"),
+    config("AWS_EC2_PUBLIC_DNS"),
     "localhost",
     "127.0.0.1",
     "0.0.0.0",
