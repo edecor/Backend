@@ -57,6 +57,10 @@ CSP_FONT_SRC = ("'self'",)
 CSP_STYLE_SRC = ("'self'",)
 CSP_DEFAULT_SRC = ("'none'",)
 
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
 # ---------------- REST FRAMEWORK ----------------
 
 REST_FRAMEWORK = {
