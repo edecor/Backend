@@ -1,7 +1,7 @@
 from .base import *
 
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     config("TEMP_EDECOR_DOMAIN"),
@@ -44,6 +44,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
+    "https://media.edecor.com.bd",
 ]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -52,10 +53,10 @@ if not DEBUG:
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
-CSP_SCRIPT_SRC = ("'self'",)
-CSP_IMG_SRC = ("'self'",)
-CSP_FONT_SRC = ("'self'",)
-CSP_STYLE_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'", "media.edecor.com.bd")
+CSP_IMG_SRC = ("'self'", "media.edecor.com.bd")
+CSP_FONT_SRC = ("'self'", "media.edecor.com.bd")
+CSP_STYLE_SRC = ("'self'", "media.edecor.com.bd")
 CSP_DEFAULT_SRC = ("'none'",)
 
 SECURE_HSTS_SECONDS = 31536000
