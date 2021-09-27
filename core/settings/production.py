@@ -45,6 +45,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "https://media.edecor.com.bd",
+    "https://static.edecor.com.bd",
 ]
 
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
@@ -53,10 +54,10 @@ if not DEBUG:
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
-CSP_SCRIPT_SRC = ("'self'", "media.edecor.com.bd")
-CSP_IMG_SRC = ("'self'", "media.edecor.com.bd")
-CSP_FONT_SRC = ("'self'", "media.edecor.com.bd")
-CSP_STYLE_SRC = ("'self'", "media.edecor.com.bd")
+CSP_SCRIPT_SRC = ("'self'", "media.edecor.com.bd", "https://static.edecor.com.bd")
+CSP_IMG_SRC = ("'self'", "media.edecor.com.bd", "https://static.edecor.com.bd")
+CSP_FONT_SRC = ("'self'", "media.edecor.com.bd", "https://static.edecor.com.bd")
+CSP_STYLE_SRC = ("'self'", "media.edecor.com.bd", "https://static.edecor.com.bd")
 CSP_DEFAULT_SRC = ("'none'",)
 
 SECURE_HSTS_SECONDS = 31536000
@@ -81,9 +82,11 @@ AWS_S3_CUSTOM_DOMAIN = "media.edecor.com.bd"
 
 
 # s3 static settings
-STATIC_URL = "https://media.edecor.com.bd/static/"
+AWS_STATIC_BUCKET_NAME = config("AWS_STATIC_BUCKET_NAME")
+AWS_STATIC_CUSTOM_DOMAIN = config("AWS_STATIC_CUSTOM_DOMAIN")
+STATIC_URL = "https://static.edecor.com.bd/"
 STATICFILES_STORAGE = "core.storage_backends.StaticStorage"
 
 # s3 public media settings
-MEDIA_URL = "https://media.edecor.com.bd/media/"
+MEDIA_URL = "https://media.edecor.com.bd/"
 DEFAULT_FILE_STORAGE = "core.storage_backends.PublicMediaStorage"
