@@ -41,11 +41,17 @@ class Product(models.Model):
         return self.images.count()
 
 
+def product_image_directory(instance, filename):
+    return f"products/{instance.product.slug}-{instance.product.uuid}/{filename}"
+
+
 class ProductImage(models.Model):
     product = models.ForeignKey(
         Product, on_delete=models.CASCADE, related_name="images"
     )
-    image = VersatileImageField(upload_to="products", default="default_img.jpg")
+    image = VersatileImageField(
+        upload_to=product_image_directory, default="default_img.jpg"
+    )
     alt = models.CharField(max_length=128)
 
     def __str__(self):
