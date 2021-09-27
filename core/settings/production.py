@@ -14,6 +14,9 @@ ALLOWED_HOSTS = [
     "0.0.0.0",
 ]
 
+MIDDLEWARE += [
+    "csp.middleware.CSPMiddleware",
+]
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
