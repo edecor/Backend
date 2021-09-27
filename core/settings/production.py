@@ -1,7 +1,7 @@
 from .base import *
 
-# DEBUG = False
-DEBUG = True
+DEBUG = False
+# DEBUG = True
 
 ALLOWED_HOSTS = [
     config("TEMP_EDECOR_DOMAIN"),
