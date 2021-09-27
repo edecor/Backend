@@ -3,7 +3,6 @@ from django.dispatch.dispatcher import receiver
 from .models import ProductImage
 from django.conf import settings
 import os
-import boto3
 
 
 @receiver(post_delete, sender=ProductImage)
