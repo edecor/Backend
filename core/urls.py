@@ -18,8 +18,14 @@ if settings.DEBUG:
         path("admin/", admin.site.urls),
         *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
     ]
+    admin.site.site_header = "127.0.0.1"
+    admin.site.index_title = "Switchboard"
+    admin.site.site_title = "edecor@localhost"
 
 if not settings.DEBUG:
     urlpatterns += [
         path("orEifasjfasdfaslas/", admin.site.urls),
     ]
+    admin.site.site_header = "edecor"
+    admin.site.index_title = "Control Room"
+    admin.site.site_title = "edecor@live"

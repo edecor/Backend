@@ -21,6 +21,7 @@ django-storages = "^1.11.1"
 boto3 = "^1.18.42"
 django-ckeditor = "^6.1.0"
 django-csp = "^3.7"
+django-json-widget = "^1.1.1"
 
 [tool.poetry.dev-dependencies]
 
