@@ -28,6 +28,10 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+    additional_fields = models.JSONField(
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         ordering = ["name"]

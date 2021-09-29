@@ -3,6 +3,7 @@ from .models import Category, Product, ProductImage
 from django.db.models import Count
 from ckeditor_uploader.widgets import CKEditorUploadingWidget
 from django.db import models
+from django_json_widget.widgets import JSONEditorWidget
 
 
 @admin.register(Category)
@@ -32,8 +33,10 @@ class ProductAdmin(admin.ModelAdmin):
         "description",
         "price",
         "available",
+        "additional_fields",
     ]
 
-    # formfield_overrides = {
-    #     models.TextField: {"widget": CKEditorUploadingWidget()},
-    # }
+    formfield_overrides = {
+        # models.TextField: {"widget": CKEditorUploadingWidget()},
+        models.JSONField: {"widget": JSONEditorWidget(width="50%")},
+    }

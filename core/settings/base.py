@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "dj_rest_auth.registration",
     "corsheaders",
     "storages",
+    "django_json_widget",
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"

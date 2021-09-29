@@ -30,4 +30,5 @@ class ProductSerializer(serializers.ModelSerializer):
             "price",
             "available",
             "updated",
+            "additional_fields",
         ]
