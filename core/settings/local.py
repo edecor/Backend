@@ -11,7 +11,6 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS += [
     "ckeditor",
-    "ckeditor_uploader",
 ]
 
 # Database
@@ -43,4 +42,10 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
 
-CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "full",
+        "height": 300,
+        "width": 1500,
+    },
+}

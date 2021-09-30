@@ -1,7 +1,7 @@
 from django.contrib import admin
 from .models import Category, Product, ProductImage
 from django.db.models import Count
-from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from ckeditor.widgets import CKEditorWidget
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
 
@@ -37,6 +37,6 @@ class ProductAdmin(admin.ModelAdmin):
     ]
 
     formfield_overrides = {
-        # models.TextField: {"widget": CKEditorUploadingWidget()},
+        models.TextField: {"widget": CKEditorWidget},
         models.JSONField: {"widget": JSONEditorWidget(width="50%")},
     }

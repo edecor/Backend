@@ -8,13 +8,16 @@ import versatileimagefield.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('products', '0008_remove_uuid_null_20210903_0516'),
+        ("products", "0008_remove_uuid_null_20210903_0516"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='productimage',
-            name='image',
-            field=versatileimagefield.fields.VersatileImageField(default='default_img.jpg', upload_to=products.models.product_image_directory),
+            model_name="productimage",
+            name="image",
+            field=versatileimagefield.fields.VersatileImageField(
+                default="default_img.jpg",
+                upload_to=products.models.return_product_image_directory,
+            ),
         ),
     ]
