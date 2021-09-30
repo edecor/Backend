@@ -29,11 +29,11 @@ class ProductAdmin(admin.ModelAdmin):
     fields = [
         "name",
         "slug",
-        "categories",
         "description",
         "price",
-        "available",
         "additional_fields",
+        "categories",
+        "available",
     ]
 
     formfield_overrides = {
