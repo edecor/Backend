@@ -1,6 +1,7 @@
 import uuid
 from django.db import models
 from versatileimagefield.fields import VersatileImageField
+from django.utils.text import slugify
 
 
 class Category(models.Model):
@@ -16,7 +17,14 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=400, db_index=True)
-    slug = models.SlugField(max_length=200, db_index=True)
+    slug = models.SlugField(
+        max_length=200,
+        db_index=True,
+        null=False,
+        unique=True,
+        help_text="dw it'll appear after you save the first time",
+    )
+
     categories = models.ManyToManyField(
         Category,
         related_name="categories",
@@ -34,6 +42,7 @@ class Product(models.Model):
     additional_fields = models.JSONField(
         blank=True,
         null=True,
+        help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
     )
 
     class Meta:
@@ -46,6 +55,11 @@ class Product(models.Model):
     @property
     def image_count(self):
         return self.images.count()
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(f"{self.name}-{self.uuid}")
+        return super().save(*args, **kwargs)
 
 
 def return_product_image_directory(instance, filename):

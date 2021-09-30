@@ -26,6 +26,7 @@ class ProductAdmin(admin.ModelAdmin):
         ProductImagesInline,
     ]
 
+    readonly_fields = ("uuid", "slug")
     fields = [
         "name",
         "slug",
@@ -34,9 +35,10 @@ class ProductAdmin(admin.ModelAdmin):
         "additional_fields",
         "categories",
         "available",
+        "uuid",
     ]
 
     formfield_overrides = {
         models.TextField: {"widget": CKEditorWidget},
-        models.JSONField: {"widget": JSONEditorWidget(width="50%")},
+        models.JSONField: {"widget": JSONEditorWidget(height=300, width="50%")},
     }
