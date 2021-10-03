@@ -25,6 +25,6 @@ if not settings.DEBUG:
     urlpatterns += [
         path("orEifasjfasdfaslas/", admin.site.urls),
     ]
-    admin.site.site_header = "edecor"
+    admin.site.site_header = "edecor Control Room"
     admin.site.index_title = "Control Room"
     admin.site.site_title = "edecor@live"
