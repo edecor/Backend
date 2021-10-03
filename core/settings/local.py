@@ -9,10 +9,6 @@ ALLOWED_HOSTS = [
     "[::1]",
 ]
 
-INSTALLED_APPS += [
-    "ckeditor",
-]
-
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -41,11 +37,3 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
-
-CKEDITOR_CONFIGS = {
-    "default": {
-        "toolbar": "full",
-        "height": 300,
-        "width": 1500,
-    },
-}

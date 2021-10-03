@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "storages",
     "django_json_widget",
+    "ckeditor",
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
@@ -112,3 +113,11 @@ REST_FRAMEWORK = {
 }
 
 SITE_ID = 1
+
+CKEDITOR_CONFIGS = {
+    "default": {
+        "toolbar": "full",
+        "height": 300,
+        "width": 1100,
+    },
+}
