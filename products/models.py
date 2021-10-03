@@ -64,8 +64,8 @@ class Product(models.Model):
 
 def return_product_image_directory(instance, filename):
     if instance.is_description_image:
-        return f"products/{instance.product.slug}-{instance.product.uuid}/description/{filename}"
-    return f"products/{instance.product.slug}-{instance.product.uuid}/main/{filename}"
+        return f"products/{instance.product.slug}/description/{filename}"
+    return f"products/{instance.product.slug}/main/{filename}"
 
 
 class ProductImage(models.Model):
