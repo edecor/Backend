@@ -54,10 +54,29 @@ if not DEBUG:
 CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 
-CSP_SCRIPT_SRC = ("'self'", "media.edecor.com.bd", "https://static.edecor.com.bd")
-CSP_IMG_SRC = ("'self'", "media.edecor.com.bd", "https://static.edecor.com.bd")
-CSP_FONT_SRC = ("'self'", "media.edecor.com.bd", "https://static.edecor.com.bd")
-CSP_STYLE_SRC = ("'self'", "media.edecor.com.bd", "https://static.edecor.com.bd")
+CSP_SCRIPT_SRC = (
+    "'self'",
+    "https://media.edecor.com.bd",
+    "https://static.edecor.com.bd",
+    "'sha256-AXko6rHitHpxc/vQDGt1hMT4mFAGegAwef1crVaKt5Q='",
+    "'sha256-3FHpPdFGM9DQ5Fh9RQH+MtaIt3XwPBvdHTrm6gWPNG8='",
+)
+CSP_IMG_SRC = (
+    "'self'",
+    "https://media.edecor.com.bd",
+    "https://static.edecor.com.bd",
+)
+CSP_FONT_SRC = (
+    "'self'",
+    "https://media.edecor.com.bd",
+    "https://static.edecor.com.bd",
+)
+CSP_STYLE_SRC = (
+    "'self'",
+    "https://media.edecor.com.bd",
+    "https://static.edecor.com.bd",
+    "'unsafe-inline'",
+)
 CSP_DEFAULT_SRC = ("'none'",)
 
 SECURE_HSTS_SECONDS = 31536000
@@ -90,3 +109,6 @@ STATICFILES_STORAGE = "core.storage_backends.StaticStorage"
 # s3 public media settings
 MEDIA_URL = "https://media.edecor.com.bd/"
 DEFAULT_FILE_STORAGE = "core.storage_backends.PublicMediaStorage"
+
+# ckeditor doc tells me to put it here
+AWS_QUERYSTRING_AUTH = False
