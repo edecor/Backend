@@ -1,7 +1,9 @@
 from .base import *
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = [
     config("TEMP_EDECOR_DOMAIN"),
@@ -113,3 +115,18 @@ DEFAULT_FILE_STORAGE = "core.storage_backends.PublicMediaStorage"
 
 # ckeditor doc tells me to put it here
 AWS_QUERYSTRING_AUTH = False
+
+
+#### SENTRY ####
+
+sentry_sdk.init(
+    dsn=config("SENTRY_URL"),
+    integrations=[DjangoIntegration()],
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True,
+)

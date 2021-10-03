@@ -22,3 +22,7 @@ class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 def tempOKview(request):
     return HttpResponse("hi")
+
+
+def trigger_error(request):
+    division_by_zero = 1 / 0
