@@ -22,7 +22,7 @@ class Product(models.Model):
         db_index=True,
         null=False,
         unique=True,
-        help_text="dw it'll appear after you save the first time",
+        help_text="URL, will appear after you save for the first time",
     )
 
     categories = models.ManyToManyField(
