@@ -20,7 +20,7 @@ class ProductImagesInline(admin.TabularInline):
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
     list_display = ["name", "price", "available", "created", "updated", "image_count"]
-    list_filter = ["available", "created", "updated"]
+    list_filter = ["available", "created", "updated", "categories"]
     list_editable = ["price", "available"]
     inlines = [
         ProductImagesInline,
