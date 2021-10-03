@@ -58,8 +58,9 @@ CSP_SCRIPT_SRC = (
     "'self'",
     "https://media.edecor.com.bd",
     "https://static.edecor.com.bd",
-    "'sha256-AXko6rHitHpxc/vQDGt1hMT4mFAGegAwef1crVaKt5Q='",
-    "'sha256-3FHpPdFGM9DQ5Fh9RQH+MtaIt3XwPBvdHTrm6gWPNG8='",
+    # "'sha256-AXko6rHitHpxc/vQDGt1hMT4mFAGegAwef1crVaKt5Q='",
+    # "'sha256-3FHpPdFGM9DQ5Fh9RQH+MtaIt3XwPBvdHTrm6gWPNG8='",
+    "'unsafe-inline'",
 )
 CSP_IMG_SRC = (
     "'self'",
