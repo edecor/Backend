@@ -8,7 +8,7 @@ set -o nounset
 
 # Check that $DJANGO_ENV is set to "production",
 # fail otherwise, since it may break things:
-echo "DJANGO_ENV is $DJANGO_ENV"
+
 if [ "$DJANGO_ENV" != 'production' ]; then
   echo 'Error: DJANGO_ENV is not set to "production".'
   echo 'Application will not start.'
@@ -16,6 +16,8 @@ if [ "$DJANGO_ENV" != 'production' ]; then
 fi
 
 export DJANGO_SETTINGS_MODULE=core.settings.production
+mkdir -p /var/log/gunicorn
+touch /var/log/gunicorn/access.log /var/log/gunicorn/error.log
 
 # Run python specific scripts:
 # Running migrations in startup script might not be the best option, see:
@@ -29,10 +31,4 @@ export DJANGO_SETTINGS_MODULE=core.settings.production
 # Concerning `workers` setting see:
 # https://github.com/wemake-services/wemake-django-template/issues/1022
 
-exec gunicorn core.wsgi -b 0.0.0.0:8000
-  --workers=4 `# Sync worker settings` \
-  --max-requests=2000 \
-  --max-requests-jitter=400 \
-  # --chdir='/code'       `# Locations` \
-  --log-file=- \
-  --worker-tmp-dir='/dev/shm'
+gunicorn core.wsgi -c /code/config/gunicorn.conf.py
