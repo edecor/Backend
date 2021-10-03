@@ -80,3 +80,8 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.alt
+
+
+# ------------- MAIN CATEGORY MODELS -------------#
+
+# class MaterialCategory(Product):
