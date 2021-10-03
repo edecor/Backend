@@ -73,7 +73,9 @@ class ProductImage(models.Model):
         Product, on_delete=models.CASCADE, related_name="images"
     )
     image = VersatileImageField(
-        upload_to=return_product_image_directory, default="default_img.jpg"
+        upload_to=return_product_image_directory,
+        default="default_img.jpg",
+        max_length=600,
     )
     alt = models.CharField(max_length=128)
     is_description_image = models.BooleanField(default=False)
