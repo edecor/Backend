@@ -5,17 +5,27 @@ from django.utils.text import slugify
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=200)
-
-    class Meta:
-        verbose_name = "category"
-        verbose_name_plural = "categories"
+    name = models.CharField(max_length=250)
 
     def __str__(self):
         return self.name
 
 
-class Product(models.Model):
+class Brand(models.Model):
+    name = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.name
+
+
+class Supplier(models.Model):
+    name = models.CharField(max_length=250)
+
+    def __str__(self):
+        return self.name
+
+
+class AbstractProduct(models.Model):
     name = models.CharField(max_length=400, db_index=True)
     slug = models.SlugField(
         max_length=200,
@@ -23,12 +33,6 @@ class Product(models.Model):
         null=False,
         unique=True,
         help_text="URL, will appear after you save for the first time",
-    )
-
-    categories = models.ManyToManyField(
-        Category,
-        related_name="categories",
-        related_query_name="category",
     )
     description = models.TextField(
         blank=True,
@@ -39,15 +43,24 @@ class Product(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
-    additional_fields = models.JSONField(
-        blank=True,
-        null=True,
-        help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
+    # additional_fields = models.JSONField(
+    #     blank=True,
+    #     null=True,
+    #     help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
+    # )
+    brand = models.ManyToManyField(
+        Brand, related_name="brands", related_query_name="brand"
+    )
+    supplier = models.ManyToManyField(
+        Supplier, related_name="suppliers", related_query_name="supplier"
     )
 
+    PLACE_OF_ORIGIN = ((BD, "Bangladesh"), (CHN, "China"))
+    place_of_origin = models.CharField(choices=PLACE_OF_ORIGIN, blank=True, null=True)
+
     class Meta:
-        ordering = ["name"]
-        indexes = [models.Index(["id", "slug"], name="id_slug_idx")]
+        abstract = True
+        ordering = ["updated"]
 
     def __str__(self):
         return self.name
@@ -69,12 +82,8 @@ def return_product_image_directory(instance, filename):
 
 
 class ProductImage(models.Model):
-    product = models.ForeignKey(
-        Product, on_delete=models.CASCADE, related_name="images"
-    )
     image = VersatileImageField(
         upload_to=return_product_image_directory,
-        default="default_img.jpg",
         max_length=600,
     )
     alt = models.CharField(max_length=128)
@@ -82,8 +91,3 @@ class ProductImage(models.Model):
 
     def __str__(self):
         return self.alt
-
-
-# ------------- MAIN CATEGORY MODELS -------------#
-
-# class MaterialCategory(Product):
