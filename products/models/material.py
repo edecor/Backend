@@ -27,3 +27,7 @@ class Material(AbstractProduct):
     size = models.CharField(max_length=50, blank=True)
     shape = models.CharField(max_length=50, blank=True)
     density = models.CharField(max_length=50, blank=True)
+
+    class Meta:
+        verbose_name = "Finish Material"
+        verbose_name_plural = "Finish Materials"
