@@ -27,7 +27,3 @@ class Material(AbstractProduct):
     size = models.CharField(max_length=50, blank=True)
     shape = models.CharField(max_length=50, blank=True)
     density = models.CharField(max_length=50, blank=True)
-
-
-class DummyModel(models.Model):
-    pass
