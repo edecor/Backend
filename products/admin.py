@@ -1,9 +1,9 @@
 from django.contrib import admin
-from .models import Category, Product, ProductImage
-from django.db.models import Count
+from .models import Category, Material, ProductImage
 from ckeditor.widgets import CKEditorWidget
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
+from django.contrib.contenttypes.admin import GenericTabularInline
 
 
 @admin.register(Category)
@@ -13,30 +13,30 @@ class CategoryAdmin(admin.ModelAdmin):
     ]
 
 
-class ProductImagesInline(admin.TabularInline):
+class ProductImagesInline(GenericTabularInline):
     model = ProductImage
 
 
-@admin.register(Product)
-class ProductAdmin(admin.ModelAdmin):
+@admin.register(Material)
+class MaterialAdmin(admin.ModelAdmin):
     list_display = ["name", "price", "available", "created", "updated", "image_count"]
-    list_filter = ["available", "created", "updated", "categories"]
+    list_filter = ["available", "created", "updated", "material_type"]
     list_editable = ["price", "available"]
     inlines = [
         ProductImagesInline,
     ]
 
     readonly_fields = ("uuid", "slug")
-    fields = [
-        "name",
-        "slug",
-        "description",
-        "price",
-        "additional_fields",
-        "categories",
-        "available",
-        "uuid",
-    ]
+    # fields = [
+    #     "name",
+    #     "slug",
+    #     "description",
+    #     "price",
+    #     "additional_fields",
+    #     "categories",
+    #     "available",
+    #     "uuid",
+    # ]
 
     formfield_overrides = {
         models.TextField: {"widget": CKEditorWidget},

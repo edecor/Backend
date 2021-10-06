@@ -1,21 +1,21 @@
-from .serializers import ProductSerializer
-from .models import Product
+from .serializers import MaterialSerializer
+from .models import Material
 from rest_framework import generics, filters
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.http import HttpResponse
 
 
-class ProductListView(generics.ListCreateAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+class MaterialListView(generics.ListCreateAPIView):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer
     filter_backends = [filters.OrderingFilter]
     ordering = ["-updated"]
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class ProductDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+class MaterialDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Material.objects.all()
+    serializer_class = MaterialSerializer()
     lookup_field = "slug"
     permission_classes = [IsAuthenticatedOrReadOnly]
 
