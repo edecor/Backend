@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Category, Material, ProductImage
+from .models import Category, Material, ProductImage, Brand, Supplier
 from ckeditor.widgets import CKEditorWidget
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
@@ -42,3 +42,13 @@ class MaterialAdmin(admin.ModelAdmin):
         models.TextField: {"widget": CKEditorWidget},
         models.JSONField: {"widget": JSONEditorWidget(height=300, width="50%")},
     }
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    pass
+
+
+@admin.register(Supplier)
+class SupplierAdmin(admin.ModelAdmin):
+    pass
