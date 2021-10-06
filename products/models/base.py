@@ -2,6 +2,9 @@ import uuid
 from django.db import models
 from versatileimagefield.fields import VersatileImageField
 from django.utils.text import slugify
+from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 
 
 class Category(models.Model):
@@ -43,11 +46,11 @@ class AbstractProduct(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
-    # additional_fields = models.JSONField(
-    #     blank=True,
-    #     null=True,
-    #     help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
-    # )
+    additional_fields = models.JSONField(
+        blank=True,
+        null=True,
+        help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
+    )
     brand = models.ManyToManyField(
         Brand, related_name="brands", related_query_name="brand"
     )
@@ -55,8 +58,11 @@ class AbstractProduct(models.Model):
         Supplier, related_name="suppliers", related_query_name="supplier"
     )
 
-    PLACE_OF_ORIGIN = ((BD, "Bangladesh"), (CHN, "China"))
-    place_of_origin = models.CharField(choices=PLACE_OF_ORIGIN, blank=True, null=True)
+    PLACE_OF_ORIGIN = (("BD", "Bangladesh"), ("CHN", "China"))
+    place_of_origin = models.CharField(
+        max_length=50, choices=PLACE_OF_ORIGIN, blank=True, null=True
+    )
+    color = models.CharField(max_length=250, blank=True, null=True)
 
     class Meta:
         abstract = True
@@ -81,6 +87,9 @@ def return_product_image_directory(instance, filename):
     return f"products/{instance.product.slug}/main/{filename}"
 
 
+CONTENT_TYPE_CHOICES = Q(app_label="products", model="material")
+
+
 class ProductImage(models.Model):
     image = VersatileImageField(
         upload_to=return_product_image_directory,
@@ -88,6 +97,12 @@ class ProductImage(models.Model):
     )
     alt = models.CharField(max_length=128)
     is_description_image = models.BooleanField(default=False)
+
+    content_type = models.ForeignKey(
+        ContentType, on_delete=models.CASCADE, limit_choices_to=CONTENT_TYPE_CHOICES
+    )
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
 
     def __str__(self):
         return self.alt

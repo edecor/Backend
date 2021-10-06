@@ -1,17 +1,17 @@
 from django.db import models
-from .base import AbstractProduct, Category
+from .base import AbstractProduct, ProductImage, Category
 
 
-class MaterialModel(AbstractProduct):
+class Material(AbstractProduct):
     PLACE_CHOICES = (
-        (INDOOR, "Indoor"),
-        (OUTDOOR, "Outdoor"),
-        (BOTH, "Both"),
+        ("INDOOR", "Indoor"),
+        ("OUTDOOR", "Outdoor"),
+        ("BOTH", "Both"),
     )
     MATERIAL_CATEGORY_CHOICES = (
-        (WALL, "Wall material"),
-        (CEILING, "Ceiling material"),
-        (FLOOR, "Floor material"),
+        ("WALL", "Wall material"),
+        ("CEILING", "Ceiling material"),
+        ("FLOOR", "Floor material"),
     )
 
     material_place = models.CharField(max_length=15, choices=PLACE_CHOICES)
@@ -23,4 +23,11 @@ class MaterialModel(AbstractProduct):
         Category, related_name="material_types", related_query_name="material_type"
     )
 
-    core_thickness
+    thickness = models.CharField(max_length=50, blank=True)
+    size = models.CharField(max_length=50, blank=True)
+    shape = models.CharField(max_length=50, blank=True)
+    density = models.CharField(max_length=50, blank=True)
+
+
+class DummyModel(models.Model):
+    pass
