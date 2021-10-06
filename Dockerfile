@@ -14,6 +14,7 @@ RUN apt-get update && apt-get upgrade -y \
     bash \
     wget \
     curl \
+    # graphviz \
     libmagic-dev \
     && curl -sSL 'https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py' | python - \
     && wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \

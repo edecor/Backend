@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     "storages",
     "django_json_widget",
     "ckeditor",
+    "django_extensions",
 ]
 
 AUTH_USER_MODEL = "user.CustomUser"
@@ -149,4 +150,8 @@ LOGGING = {
             "propagate": True,
         },
     },
+}
+
+GRAPH_MODELS = {
+    "app_labels": ["products"],
 }
