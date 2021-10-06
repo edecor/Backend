@@ -2,7 +2,7 @@ import uuid
 from django.db import models
 from versatileimagefield.fields import VersatileImageField
 from django.utils.text import slugify
-from django.contrib.contenttypes.fields import GenericForeignKey
+from django.contrib.contenttypes.fields import GenericForeignKey, GenericRelation
 from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 
@@ -26,6 +26,33 @@ class Supplier(models.Model):
 
     def __str__(self):
         return self.name
+
+
+def return_product_image_directory(instance, filename):
+    if instance.is_description_image:
+        return f"products/{instance.content_object.slug}/description/{filename}"
+    return f"products/{instance.content_object.slug}/main/{filename}"
+
+
+CONTENT_TYPE_CHOICES = Q(app_label="products", model="material")
+
+
+class ProductImage(models.Model):
+    image = VersatileImageField(
+        upload_to=return_product_image_directory,
+        max_length=600,
+    )
+    alt = models.CharField(max_length=128)
+    is_description_image = models.BooleanField(default=False)
+
+    content_type = models.ForeignKey(
+        ContentType, on_delete=models.CASCADE, limit_choices_to=CONTENT_TYPE_CHOICES
+    )
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey("content_type", "object_id")
+
+    def __str__(self):
+        return self.alt
 
 
 class AbstractProduct(models.Model):
@@ -64,6 +91,8 @@ class AbstractProduct(models.Model):
     )
     color = models.CharField(max_length=250, blank=True, null=True)
 
+    images = GenericRelation(ProductImage)
+
     class Meta:
         abstract = True
         ordering = ["updated"]
@@ -79,30 +108,3 @@ class AbstractProduct(models.Model):
         if not self.slug:
             self.slug = slugify(f"{self.name}-{self.uuid}")
         return super().save(*args, **kwargs)
-
-
-def return_product_image_directory(instance, filename):
-    if instance.is_description_image:
-        return f"products/{instance.product.slug}/description/{filename}"
-    return f"products/{instance.product.slug}/main/{filename}"
-
-
-CONTENT_TYPE_CHOICES = Q(app_label="products", model="material")
-
-
-class ProductImage(models.Model):
-    image = VersatileImageField(
-        upload_to=return_product_image_directory,
-        max_length=600,
-    )
-    alt = models.CharField(max_length=128)
-    is_description_image = models.BooleanField(default=False)
-
-    content_type = models.ForeignKey(
-        ContentType, on_delete=models.CASCADE, limit_choices_to=CONTENT_TYPE_CHOICES
-    )
-    object_id = models.PositiveIntegerField()
-    content_object = GenericForeignKey("content_type", "object_id")
-
-    def __str__(self):
-        return self.alt
