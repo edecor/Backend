@@ -4,8 +4,8 @@ from .base import AbstractProduct, Category
 
 class HomeApplianceProducts(AbstractProduct):
     class Meta:
-        verbose_name = "Home Appliance Product"
-        verbose_name_plural = "Home Appliance Products"
+        verbose_name = "Home Appliance"
+        verbose_name_plural = "Home Appliances"
 
     homeappliance_product_type = models.ManyToManyField(
         Category,
