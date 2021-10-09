@@ -38,10 +38,10 @@ def return_product_image_directory(instance, filename):
     return f"products/{instance.content_object.slug}/main/{filename}"
 
 
-CONTENT_TYPE_CHOICES = Q(app_label="products", model="material")
-
-
 class ProductImage(models.Model):
+
+    CONTENT_TYPE_CHOICES = Q(app_label="products", model="material")
+
     image = VersatileImageField(
         upload_to=return_product_image_directory,
         max_length=600,
@@ -60,6 +60,12 @@ class ProductImage(models.Model):
 
 
 class AbstractProduct(models.Model):
+    class Meta:
+        abstract = True
+        ordering = ["updated"]
+
+    PLACE_OF_ORIGIN = (("BD", "Bangladesh"), ("CHN", "China"))
+
     name = models.CharField(max_length=400, db_index=True)
     slug = models.SlugField(
         max_length=200,
@@ -82,24 +88,25 @@ class AbstractProduct(models.Model):
         null=True,
         help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
     )
+
+    # m2m fields
     brand = models.ManyToManyField(
-        Brand, related_name="brands", related_query_name="brand"
+        Brand,
+        related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss",
     )
     supplier = models.ManyToManyField(
-        Supplier, related_name="suppliers", related_query_name="supplier"
+        Supplier,
+        related_name="%(app_label)s_%(class)s_related",
+        related_query_name="%(app_label)s_%(class)ss",
     )
 
-    PLACE_OF_ORIGIN = (("BD", "Bangladesh"), ("CHN", "China"))
     place_of_origin = models.CharField(
         max_length=50, choices=PLACE_OF_ORIGIN, blank=True, null=True
     )
     color = models.CharField(max_length=250, blank=True, null=True)
 
     images = GenericRelation(ProductImage)
-
-    class Meta:
-        abstract = True
-        ordering = ["updated"]
 
     def __str__(self):
         return self.name
