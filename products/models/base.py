@@ -89,14 +89,17 @@ class AbstractProduct(models.Model):
         help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
     )
 
-    # m2m fields
-    brand = models.ManyToManyField(
+    brand = models.ForeignKey(
         Brand,
+        blank=True,
+        null=True,
         related_name="%(app_label)s_%(class)s_related",
         related_query_name="%(app_label)s_%(class)ss",
+        on_delete=models.SET_NULL,
     )
     supplier = models.ManyToManyField(
         Supplier,
+        blank=True,
         related_name="%(app_label)s_%(class)s_related",
         related_query_name="%(app_label)s_%(class)ss",
     )
