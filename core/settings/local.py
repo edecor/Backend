@@ -9,6 +9,12 @@ ALLOWED_HOSTS = [
     "[::1]",
 ]
 
+INSTALLED_APPS += ["debug_toolbar"]
+
+MIDDLEWARE += [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
+]
+
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
@@ -37,3 +43,5 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+
+INTERNAL_IPS = ["localhost", "0.0.0.0", "127.0.0.1", "172.18.0.1"]
