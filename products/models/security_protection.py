@@ -4,8 +4,8 @@ from .base import AbstractProduct, Category
 
 class SecurityProtectionProducts(AbstractProduct):
     class Meta:
-        verbose_name = "Security and Protection Product"
-        verbose_name_plural = "Security and Protection Products"
+        verbose_name = "Security and Protection"
+        verbose_name_plural = "Security and Protection"
 
     securityprotection_product_type = models.ManyToManyField(
         Category,

@@ -5,7 +5,7 @@ from .base import AbstractProduct, Category
 class DecorationsProducts(AbstractProduct):
     class Meta:
         verbose_name = "Decoration"
-        verbose_name_plural = "Decoration Products"
+        verbose_name_plural = "Decoration"
 
     decoration_product_type = models.ManyToManyField(
         Category,
