@@ -16,7 +16,7 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class MaterialSerializer(serializers.ModelSerializer):
     images = ProductImageSerializer(many=True)
-    categories = CategorySerializer(many=True)
+    material_type = CategorySerializer(many=True)
 
     class Meta:
         model = Material
@@ -25,7 +25,7 @@ class MaterialSerializer(serializers.ModelSerializer):
             "name",
             "slug",
             "images",
-            "categories",
+            "material_type",
             "description",
             "price",
             "available",
