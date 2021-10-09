@@ -7,3 +7,5 @@ from .base import (
     return_product_image_directory,
 )
 from .material import Material
+from .bathroom import BathroomProducts
+from .furniture import FurnitureProducts
