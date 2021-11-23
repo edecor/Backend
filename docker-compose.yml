@@ -19,6 +19,7 @@ services:
     volumes:
       - local-static:/code/static
       - local-media:/code/media
+      - .:/code  # We only mount source code in development:
     depends_on:
       - db
     env_file: ./config/.env
@@ -28,9 +29,6 @@ services:
     ports:
       # We only bind ports directly in development:
       - "8000:8000"
-    volumes:
-      # We only mount source code in development:
-      - .:/code
 
 volumes:
   pgdata:
