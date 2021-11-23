@@ -15,7 +15,7 @@ class MaterialListView(generics.ListCreateAPIView):
 
 class MaterialDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Material.objects.all()
-    serializer_class = MaterialSerializer()
+    serializer_class = MaterialSerializer
     lookup_field = "slug"
     permission_classes = [IsAuthenticatedOrReadOnly]
 
