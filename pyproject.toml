@@ -6,7 +6,7 @@ authors = ["FiazAbrar <abrarfiaz.bd@gmail.com>"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-Django = "^3.2.6"
+Django = "^3.2.10"
 psycopg2-binary = "^2.9.1"
 python-decouple = "^3.4"
 djangorestframework = "^3.12.4"
