@@ -1,5 +1,5 @@
 from django.db import models
-from .base import AbstractProduct, ProductImage, Category
+from .base import AbstractProduct, Category
 
 
 class FurnitureProducts(AbstractProduct):
