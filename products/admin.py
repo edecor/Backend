@@ -1,8 +1,8 @@
 from django.contrib import admin
+from django.db.models import fields
 from .models import (
     Category,
     Material,
-    ProductImage,
     Brand,
     Supplier,
     BathroomProducts,
@@ -16,11 +16,11 @@ from .models import (
     LightProducts,
     RugsMatFloorProducts,
     SecurityProtectionProducts,
+    ProductImage,
 )
 from ckeditor.widgets import CKEditorWidget
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
-from django.contrib.contenttypes.admin import GenericTabularInline
 
 
 @admin.register(Category)
@@ -30,30 +30,25 @@ class CategoryAdmin(admin.ModelAdmin):
     ]
 
 
-class ProductImagesInline(GenericTabularInline):
+@admin.register(ProductImage)
+class ProductImageAdmin(admin.ModelAdmin):
+    pass
+
+
+class MaterialProductImageAdmin(admin.TabularInline):
     model = ProductImage
+    fields = ["image", "alt", "is_description_image", "material"]
 
 
 @admin.register(Material)
 class MaterialAdmin(admin.ModelAdmin):
-    list_display = ["name", "price", "available", "created", "updated", "image_count"]
+    list_display = ["name", "price", "available", "created", "updated"]
     list_filter = ["available", "created", "updated", "material_type"]
     list_editable = ["price", "available"]
-    inlines = [
-        ProductImagesInline,
-    ]
+
+    inlines = [MaterialProductImageAdmin]
 
     readonly_fields = ("uuid", "slug")
-    # fields = [
-    #     "name",
-    #     "slug",
-    #     "description",
-    #     "price",
-    #     "additional_fields",
-    #     "categories",
-    #     "available",
-    #     "uuid",
-    # ]
 
     formfield_overrides = {
         models.TextField: {"widget": CKEditorWidget},
