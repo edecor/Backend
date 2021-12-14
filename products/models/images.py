@@ -20,11 +20,41 @@ from django.db.models.constraints import CheckConstraint
 
 from versatileimagefield.fields import VersatileImageField
 
-# JUST TESTING WITH only "material" model need to add support dynamically
+
 def return_product_image_directory(instance, filename):
+
+    # the following is basically just komedi code
+
+    if instance.product_type == "material":
+        product_instance = instance.material
+    elif instance.product_type == "bathroom":
+        product_instance = instance.bathroom
+    elif instance.product_type == "decorations":
+        product_instance = instance.decorations
+    elif instance.product_type == "furniture":
+        product_instance = instance.furniture
+    elif instance.product_type == "fabric_textile":
+        product_instance = instance.fabric_textile
+    elif instance.product_type == "hardware_tool":
+        product_instance = instance.hardware_tool
+    elif instance.product_type == "home_appliances":
+        product_instance = instance.home_appliances
+    elif instance.product_type == "kitchen":
+        product_instance = instance.kitchen
+    elif instance.product_type == "landscape_garden":
+        product_instance = instance.landscape_garden
+    elif instance.product_type == "light":
+        product_instance = instance.light
+    elif instance.product_type == "rugs_mat":
+        product_instance = instance.rugs_mat
+    elif instance.product_type == "security_protection":
+        product_instance = instance.security_protection
+    else:
+        assert instance.product_type is not None
+
     if instance.is_description_image:
-        return f"products/{instance.material.slug}/description/{filename}"
-    return f"products/{instance.material.slug}/main/{filename}"
+        return f"products/{product_instance.slug}/description/{filename}"
+    return f"products/{product_instance.slug}/main/{filename}"
 
 
 def checkImageOwner(name):
@@ -57,13 +87,33 @@ def checkImageOwner(name):
 
 
 class ProductImage(models.Model):
+    class ProductImageOwner(models.TextChoices):
+        MATERIAL = "material"
+        BATHROOM = "bathroom"
+        DECORATIONS = "decorations"
+        FURNITURE = "furniture"
+        FABRIC_TEX = "fabric_textile"
+        HARDWARE_TOOL = "hardware_tool"
+        HOME_APPLIANCES = "home_appliances"
+        KITCHEN = "kitchen"
+        LANDSCAPE = "landscape_garden"
+        LIGHT = "light"
+        RUGS_MAT = "rugs_mat"
+        SEC_PROT = "security_protection"
 
     image = VersatileImageField(
         upload_to=return_product_image_directory,
         max_length=600,
     )
     alt = models.CharField(max_length=128)
+
     is_description_image = models.BooleanField(default=False)
+
+    product_type = models.CharField(
+        max_length=25,
+        choices=ProductImageOwner.choices,
+        default=ProductImageOwner.MATERIAL,
+    )
 
     material = models.ForeignKey(
         Material, on_delete=models.CASCADE, blank=True, null=True
