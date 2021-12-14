@@ -18,6 +18,7 @@ from .models import (
     SecurityProtectionProducts,
     ProductImage,
 )
+
 from ckeditor.widgets import CKEditorWidget
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
@@ -37,7 +38,74 @@ class ProductImageAdmin(admin.ModelAdmin):
 
 class MaterialProductImageAdmin(admin.TabularInline):
     model = ProductImage
-    fields = ["image", "alt", "is_description_image", "material"]
+    fields = ["image", "alt", "is_description_image", "material", "product_type"]
+
+
+class BathroomProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "bathroom", "product_type"]
+
+
+class DecorationsProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "decorations", "product_type"]
+
+
+class FabricTextileProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "fabric_textile", "product_type"]
+
+
+class FurnitureProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "furniture", "product_type"]
+
+
+class HardwareToolProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "hardware_tool", "product_type"]
+
+
+class HomeAppliancesProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "home_appliances", "product_type"]
+
+
+class KitchenProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "kitchen", "product_type"]
+
+
+class LandscapeGardenProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = [
+        "image",
+        "alt",
+        "is_description_image",
+        "landscape_garden",
+        "product_type",
+    ]
+
+
+class LightProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "light", "product_type"]
+
+
+class RugsMatProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = ["image", "alt", "is_description_image", "rugs_mat", "product_type"]
+
+
+class SecurityProtectionProductImageAdmin(admin.TabularInline):
+    model = ProductImage
+    fields = [
+        "image",
+        "alt",
+        "is_description_image",
+        "security_protection",
+        "product_type",
+    ]
 
 
 @admin.register(Material)
@@ -68,54 +136,54 @@ class SupplierAdmin(admin.ModelAdmin):
 
 @admin.register(BathroomProducts)
 class BathroomProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [BathroomProductImageAdmin]
 
 
 @admin.register(DecorationsProducts)
 class DecorationProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [DecorationsProductImageAdmin]
 
 
 @admin.register(FabricTextileProducts)
 class FabricTextileProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [DecorationsProductImageAdmin]
 
 
 @admin.register(FurnitureProducts)
 class FurnitureProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [FurnitureProductImageAdmin]
 
 
 @admin.register(HardwareToolProducts)
 class HardwareToolProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [HardwareToolProductImageAdmin]
 
 
 @admin.register(HomeApplianceProducts)
 class HomeApplianceProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [HomeAppliancesProductImageAdmin]
 
 
 @admin.register(KitchenProducts)
 class KitchenProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [KitchenProductImageAdmin]
 
 
 @admin.register(LandscapeProducts)
 class LandscapeProductsAdmin(admin.ModelAdmin):
-    pass
+    inlinse = [LandscapeGardenProductImageAdmin]
 
 
 @admin.register(LightProducts)
 class LightProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [LightProductImageAdmin]
 
 
 @admin.register(RugsMatFloorProducts)
 class RugsMatFloorProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [RugsMatProductImageAdmin]
 
 
 @admin.register(SecurityProtectionProducts)
 class SecurityProtectionProductsAdmin(admin.ModelAdmin):
-    pass
+    inlines = [SecurityProtectionProductImageAdmin]
