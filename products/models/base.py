@@ -11,13 +11,6 @@ class Brand(models.Model):
         return self.name
 
 
-class Supplier(models.Model):
-    name = models.CharField(max_length=250)
-
-    def __str__(self):
-        return self.name
-
-
 class AbstractProduct(models.Model):
     class Meta:
         abstract = True
@@ -55,13 +48,6 @@ class AbstractProduct(models.Model):
         related_name="%(app_label)s_%(class)s_related",
         related_query_name="%(app_label)s_%(class)ss",
         on_delete=models.SET_NULL,
-    )
-
-    supplier = models.ManyToManyField(
-        Supplier,
-        blank=True,
-        related_name="%(app_label)s_%(class)s_related",
-        related_query_name="%(app_label)s_%(class)ss",
     )
 
     place_of_origin = models.CharField(

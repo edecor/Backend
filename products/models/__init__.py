@@ -1,6 +1,5 @@
 from .base import (
     Brand,
-    Supplier,
     AbstractProduct,
 )
 

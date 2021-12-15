@@ -3,7 +3,6 @@ from django.db.models import fields
 from .models import (
     Material,
     Brand,
-    Supplier,
     BathroomProducts,
     DecorationsProducts,
     FabricTextileProducts,
@@ -118,11 +117,6 @@ class MaterialAdmin(admin.ModelAdmin):
 
 @admin.register(Brand)
 class BrandAdmin(admin.ModelAdmin):
-    pass
-
-
-@admin.register(Supplier)
-class SupplierAdmin(admin.ModelAdmin):
     pass
 
 
