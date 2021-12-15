@@ -4,17 +4,6 @@ from django.db import models
 from django.utils.text import slugify
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=250)
-
-    class Meta:
-        verbose_name = "Category"
-        verbose_name_plural = "Categories"
-
-    def __str__(self):
-        return self.name
-
-
 class Brand(models.Model):
     name = models.CharField(max_length=250)
 
@@ -67,6 +56,7 @@ class AbstractProduct(models.Model):
         related_query_name="%(app_label)s_%(class)ss",
         on_delete=models.SET_NULL,
     )
+
     supplier = models.ManyToManyField(
         Supplier,
         blank=True,

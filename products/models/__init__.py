@@ -1,5 +1,4 @@
 from .base import (
-    Category,
     Brand,
     Supplier,
     AbstractProduct,

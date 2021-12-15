@@ -1,14 +1,8 @@
 from django.db import models
-from .base import AbstractProduct, Category
+from .base import AbstractProduct
 
 
 class HomeApplianceProducts(AbstractProduct):
     class Meta:
         verbose_name = "Home Appliance"
         verbose_name_plural = "Home Appliances"
-
-    homeappliance_product_type = models.ManyToManyField(
-        Category,
-        related_name="homeappliance_product_types",
-        related_query_name="homeappliance_product_type",
-    )

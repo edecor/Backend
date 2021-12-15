@@ -1,7 +1,6 @@
 from django.contrib import admin
 from django.db.models import fields
 from .models import (
-    Category,
     Material,
     Brand,
     Supplier,
@@ -22,13 +21,6 @@ from .models import (
 from ckeditor.widgets import CKEditorWidget
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
-
-
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = [
-        "name",
-    ]
 
 
 @admin.register(ProductImage)
@@ -111,7 +103,7 @@ class SecurityProtectionProductImageAdmin(admin.TabularInline):
 @admin.register(Material)
 class MaterialAdmin(admin.ModelAdmin):
     list_display = ["name", "price", "available", "created", "updated"]
-    list_filter = ["available", "created", "updated", "material_type"]
+    list_filter = ["available", "created", "updated"]
     list_editable = ["price", "available"]
 
     inlines = [MaterialProductImageAdmin]
