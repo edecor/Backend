@@ -19,6 +19,7 @@ INSTALLED_APPS = [
     # local apps
     "user.apps.UserConfig",
     "products.apps.ProductsConfig",
+    "orders.apps.OrdersConfig",
     # third party packages
     "rest_framework",
     "rest_framework.authtoken",
