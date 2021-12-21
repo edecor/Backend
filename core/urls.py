@@ -6,11 +6,13 @@ import debug_toolbar
 
 
 urlpatterns = [
-    path("api/", include("products.urls")),
+    path("api/products/", include("products.urls")),
     path("api-auth/", include("rest_framework.urls")),
     path("api/dj-rest-auth/", include("dj_rest_auth.urls")),
     path("api/dj-rest-auth/registration", include("dj_rest_auth.registration.urls")),
     path("", include("products.urls")),
+    path("accounts/", include("allauth.urls")),
+    path("api/customer_profile/", include("user_profiles.urls")),
 ]
 
 if settings.DEBUG:
