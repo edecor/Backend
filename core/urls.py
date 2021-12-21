@@ -12,7 +12,7 @@ urlpatterns = [
     path("api/dj-rest-auth/registration", include("dj_rest_auth.registration.urls")),
     path("", include("products.urls")),
     path("accounts/", include("allauth.urls")),
-    path("api/customer_profile/", include("user_profiles.urls")),
+    path("api/customer-profile/", include("user_profiles.urls")),
 ]
 
 if settings.DEBUG:
