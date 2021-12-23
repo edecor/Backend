@@ -115,11 +115,6 @@ class MaterialAdmin(admin.ModelAdmin):
     }
 
 
-@admin.register(Brand)
-class BrandAdmin(admin.ModelAdmin):
-    pass
-
-
 @admin.register(BathroomProducts)
 class BathroomProductsAdmin(admin.ModelAdmin):
     inlines = [BathroomProductImageAdmin]
@@ -137,6 +132,7 @@ class FabricTextileProductsAdmin(admin.ModelAdmin):
 
 @admin.register(FurnitureProducts)
 class FurnitureProductsAdmin(admin.ModelAdmin):
+    readonly_fields = ["uuid", "slug"]
     inlines = [FurnitureProductImageAdmin]
 
 
