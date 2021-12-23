@@ -165,3 +165,13 @@ ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = "email"
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": config("LOCAL_GOOGLE_CLIENT_ID"),
+            "secret": config("LOCAL_GOOGLE_CLIENT_SECRET"),
+            "key": "",
+        }
+    }
+}
