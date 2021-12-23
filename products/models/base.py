@@ -41,15 +41,6 @@ class AbstractProduct(models.Model):
         help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
     )
 
-    brand = models.ForeignKey(
-        Brand,
-        blank=True,
-        null=True,
-        related_name="%(app_label)s_%(class)s_related",
-        related_query_name="%(app_label)s_%(class)ss",
-        on_delete=models.SET_NULL,
-    )
-
     place_of_origin = models.CharField(
         max_length=50, choices=PLACE_OF_ORIGIN, blank=True, null=True
     )
