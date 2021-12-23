@@ -15,4 +15,5 @@ class WishListAdmin(admin.ModelAdmin):
 
 @admin.register(Customer)
 class CustomerAdmin(admin.ModelAdmin):
-    pass
+    fields = ["user", "first_name", "last_name", "uuid"]
+    readonly_fields = ["uuid"]

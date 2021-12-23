@@ -20,4 +20,4 @@ class CustomerProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Customer
-        fields = ["user", "first_name", "last_name"]
+        fields = ["user", "uuid", "first_name", "last_name"]

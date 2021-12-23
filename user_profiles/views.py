@@ -8,4 +8,4 @@ from .serializers import CustomerProfileSerializer
 class CustomerProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Customer.objects.all()
     serializer_class = CustomerProfileSerializer
-    lookup_field = "id"
+    lookup_field = "uuid"
