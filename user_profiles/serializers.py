@@ -12,18 +12,27 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["email", "date_joined"]
 
 
-class CustomerProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer()
-
-    class Meta:
-        model = Customer
-        fields = ["user", "uuid", "first_name", "last_name"]
-
-
 class WishtItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishItem
         fields = "__all__"
+
+
+class WishListSerializerInCustomerProfileSerializer(serializers.ModelSerializer):
+    wishes = WishtItemSerializer(many=True)
+
+    class Meta:
+        model = WishList
+        fields = ["name", "date_modified", "wishes"]
+
+
+class CustomerProfileSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    wishlists = WishListSerializerInCustomerProfileSerializer(many=True)
+
+    class Meta:
+        model = Customer
+        fields = ["user", "uuid", "first_name", "last_name", "wishlists"]
 
 
 class WishListSerializer(serializers.ModelSerializer):
