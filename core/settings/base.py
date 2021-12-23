@@ -19,6 +19,8 @@ INSTALLED_APPS = [
     # local apps
     "user.apps.UserConfig",
     "products.apps.ProductsConfig",
+    "orders.apps.OrdersConfig",
+    "user_profiles.apps.UserProfilesConfig",
     # third party packages
     "rest_framework",
     "rest_framework.authtoken",
@@ -27,6 +29,7 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "allauth.socialaccount",
+    "allauth.socialaccount.providers.google",
     "dj_rest_auth.registration",
     "corsheaders",
     "storages",
@@ -154,4 +157,21 @@ LOGGING = {
 
 GRAPH_MODELS = {
     "app_labels": ["products"],
+}
+
+LOGIN_REDIRECT_URL = "http://localhost:3000/login"
+
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = "email"
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": config("LOCAL_GOOGLE_CLIENT_ID"),
+            "secret": config("LOCAL_GOOGLE_CLIENT_SECRET"),
+            "key": "",
+        }
+    }
 }

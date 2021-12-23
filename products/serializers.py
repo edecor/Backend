@@ -9,7 +9,7 @@ class ProductImageSerializer(serializers.ModelSerializer):
 
 
 class MaterialSerializer(serializers.ModelSerializer):
-    images = ProductImageSerializer(many=True)
+    productimage_set = ProductImageSerializer(many=True)
 
     class Meta:
         model = Material
@@ -17,9 +17,8 @@ class MaterialSerializer(serializers.ModelSerializer):
             "uuid",
             "name",
             "slug",
-            "images",
-            "material_type",
             "description",
+            "productimage_set",
             "price",
             "available",
             "updated",

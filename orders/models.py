@@ -1,7 +1,10 @@
-import uuid
+import functools
+import operator
 
 from django.db import models
 from django.conf import settings
+from django.db.models import Q
+from django.db.models.constraints import CheckConstraint
 
 from products.models import (
     Material,
@@ -17,21 +20,49 @@ from products.models import (
     RugsMatFloorProducts,
     SecurityProtectionProducts,
 )
-from .utils import checkWishOwner
 
 
-class Customer(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True)
-    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
+class Order(models.Model):
+    order_date = models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    billing_status = models.BooleanField(default=False)
+    total_paid = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
-        return self.user.email
+        return str(self.order_date)
 
 
-class WishItem(models.Model):
-    class ProductWishOwner(models.TextChoices):
+def checkOrderOwner(name):
+    q_objs = []
+    all_field_names = [
+        "material",
+        "bathroom",
+        "decorations",
+        "furniture",
+        "fabric_textile",
+        "hardware_tool",
+        "home_appliances",
+        "kitchen",
+        "landscape_garden",
+        "light",
+        "rugs_mat",
+        "security_protection",
+    ]
+
+    for field_name in all_field_names:
+        q_obj = Q(
+            **{
+                f"{f_name}__isnull": (False if field_name == f_name else True)
+                for f_name in all_field_names
+            }
+        )
+        q_objs.append(q_obj)
+
+    return CheckConstraint(check=functools.reduce(operator.or_, q_objs), name=name)
+
+
+class OrderItem(models.Model):
+    class ProductOrderOwner(models.TextChoices):
         MATERIAL = "material"
         BATHROOM = "bathroom"
         DECORATIONS = "decorations"
@@ -45,10 +76,12 @@ class WishItem(models.Model):
         RUGS_MAT = "rugs_mat"
         SEC_PROT = "security_protection"
 
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
+
     product_type = models.CharField(
         max_length=25,
-        choices=ProductWishOwner.choices,
-        default=ProductWishOwner.MATERIAL,
+        choices=ProductOrderOwner.choices,
+        default=ProductOrderOwner.MATERIAL,
     )
 
     material = models.ForeignKey(
@@ -88,9 +121,12 @@ class WishItem(models.Model):
         SecurityProtectionProducts, on_delete=models.CASCADE, blank=True, null=True
     )
 
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    quantity = models.PositiveBigIntegerField(default=1)
+
     class Meta:
         constraints = [
-            checkWishOwner(name="%(app_label)s_%(class)s_value_matches_type")
+            checkOrderOwner(name="%(app_label)s_%(class)s_value_matches_type")
         ]
 
     def __str__(self):
@@ -120,14 +156,4 @@ class WishItem(models.Model):
             return self.rugs_mat
         if self.security_protection_id is not None:
             return self.security_protection
-
-
-class WishList(models.Model):
-    name = models.CharField(max_length=255)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now_add=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    wishes = models.ManyToManyField(WishItem)
-
-    def __str__(self):
-        return self.name
+        raise AssertionError("No owner for image defined")

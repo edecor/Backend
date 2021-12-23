@@ -21,6 +21,10 @@ class MaterialDetailView(generics.RetrieveUpdateDestroyAPIView):
 
 
 def tempOKview(request):
+    # print(request.headers["Cookie"].split(";")[1].lstrip())
+    print(request.session.session_key)
+    if request.user.is_authenticated:
+        return HttpResponse("YO")
     return HttpResponse("hi")
 
 

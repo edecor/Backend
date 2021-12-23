@@ -1,3 +1,11 @@
-from django.shortcuts import render
+from rest_framework import generics
+from rest_framework.serializers import Serializer
 
-# Create your views here.
+from .models import Customer
+from .serializers import CustomerProfileSerializer
+
+
+class CustomerProfileDetailView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Customer.objects.all()
+    serializer_class = CustomerProfileSerializer
+    lookup_field = "uuid"
