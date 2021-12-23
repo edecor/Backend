@@ -4,13 +4,6 @@ from django.db import models
 from django.utils.text import slugify
 
 
-class Brand(models.Model):
-    name = models.CharField(max_length=250)
-
-    def __str__(self):
-        return self.name
-
-
 class AbstractProduct(models.Model):
     class Meta:
         abstract = True
@@ -39,15 +32,6 @@ class AbstractProduct(models.Model):
         blank=True,
         null=True,
         help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
-    )
-
-    brand = models.ForeignKey(
-        Brand,
-        blank=True,
-        null=True,
-        related_name="%(app_label)s_%(class)s_related",
-        related_query_name="%(app_label)s_%(class)ss",
-        on_delete=models.SET_NULL,
     )
 
     place_of_origin = models.CharField(

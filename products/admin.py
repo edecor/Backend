@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.db.models import fields
 from .models import (
     Material,
-    Brand,
     BathroomProducts,
     DecorationsProducts,
     FabricTextileProducts,
@@ -104,20 +103,31 @@ class MaterialAdmin(admin.ModelAdmin):
     list_display = ["name", "price", "available", "created", "updated"]
     list_filter = ["available", "created", "updated"]
     list_editable = ["price", "available"]
+    fields = [
+        "name",
+        "slug",
+        "description",
+        "price",
+        "available",
+        "uuid",
+        "additional_fields",
+        "place_of_origin",
+        "color",
+        "material_place",
+        "material_category",
+        "thickness",
+        "size",
+        "shape",
+        "density",
+    ]
+    readonly_fields = ["uuid", "slug"]
 
     inlines = [MaterialProductImageAdmin]
-
-    readonly_fields = ("uuid", "slug")
 
     formfield_overrides = {
         models.TextField: {"widget": CKEditorWidget},
         models.JSONField: {"widget": JSONEditorWidget(height=300, width="50%")},
     }
-
-
-@admin.register(Brand)
-class BrandAdmin(admin.ModelAdmin):
-    pass
 
 
 @admin.register(BathroomProducts)
