@@ -125,7 +125,7 @@ class WishItem(models.Model):
 class WishList(models.Model):
     name = models.CharField(max_length=255)
     date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     wishes = models.ManyToManyField(WishItem)
 
