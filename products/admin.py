@@ -147,6 +147,7 @@ class FabricTextileProductsAdmin(admin.ModelAdmin):
 
 @admin.register(FurnitureProducts)
 class FurnitureProductsAdmin(admin.ModelAdmin):
+    readonly_fields = ["uuid", "slug"]
     inlines = [FurnitureProductImageAdmin]
 
 
