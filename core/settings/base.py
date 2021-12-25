@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "products.apps.ProductsConfig",
     "orders.apps.OrdersConfig",
     "user_profiles.apps.UserProfilesConfig",
+    "rooms.apps.RoomsConfig",
     # third party packages
     "rest_framework",
     "rest_framework.authtoken",
