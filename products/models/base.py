@@ -3,6 +3,8 @@ import uuid
 from django.db import models
 from django.utils.text import slugify
 
+from rooms.models import Room
+
 
 class AbstractProduct(models.Model):
     class Meta:
@@ -33,6 +35,8 @@ class AbstractProduct(models.Model):
         null=True,
         help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
     )
+
+    rooms = models.ManyToManyField(Room)
 
     place_of_origin = models.CharField(
         max_length=50, choices=PLACE_OF_ORIGIN, blank=True, null=True

@@ -115,6 +115,7 @@ class MaterialAdmin(admin.ModelAdmin):
         "color",
         "material_place",
         "material_category",
+        "rooms",
         "thickness",
         "size",
         "shape",
