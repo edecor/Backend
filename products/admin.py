@@ -14,11 +14,17 @@ from .models import (
     RugsMatFloorProducts,
     SecurityProtectionProducts,
     ProductImage,
+    Brand,
 )
 
 from ckeditor.widgets import CKEditorWidget
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(ProductImage)

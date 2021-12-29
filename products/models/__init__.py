@@ -1,4 +1,4 @@
-from .base import AbstractProduct
+from .base import AbstractProduct, Brand
 from .images import ProductImage, return_product_image_directory
 from .material import Material
 from .bathroom import BathroomProducts
