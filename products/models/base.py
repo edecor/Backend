@@ -6,6 +6,13 @@ from django.utils.text import slugify
 from rooms.models import Room
 
 
+class Brand(models.Model):
+    name = models.CharField(max_length=255)
+
+    def __str__(self):
+        return self.name
+
+
 class AbstractProduct(models.Model):
     class Meta:
         abstract = True
@@ -36,6 +43,7 @@ class AbstractProduct(models.Model):
         help_text="To add extra fields, you can write a json. Delete the 'null' and start writing!",
     )
 
+    brand = models.ForeignKey(Brand, on_delete=models.SET_NULL, null=True)
     rooms = models.ManyToManyField(Room)
 
     place_of_origin = models.CharField(
