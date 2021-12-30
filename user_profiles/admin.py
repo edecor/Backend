@@ -22,3 +22,63 @@ class CustomerAdmin(admin.ModelAdmin):
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
     pass
+
+
+class MaterialCommentAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "material", "product_type"]
+
+
+class BathroomProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "bathroom", "product_type"]
+
+
+class DecorationsProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "decorations", "product_type"]
+
+
+class FabricTextileProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "fabric_textile", "product_type"]
+
+
+class FurnitureProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "furniture", "product_type"]
+
+
+class HardwareToolProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "hardware_tool", "product_type"]
+
+
+class HomeAppliancesProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "home_appliances", "product_type"]
+
+
+class KitchenProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "kitchen", "product_type"]
+
+
+class LandscapeGardenProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "landscape_garden", "product_type"]
+
+
+class LightProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "light", "product_type"]
+
+
+class RugsMatProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "rugs_mat", "product_type"]
+
+
+class SecurityProtectionProductImageAdmin(admin.TabularInline):
+    model = Comment
+    fields = ["customer", "security_protection", "product_type"]
