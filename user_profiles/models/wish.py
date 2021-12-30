@@ -1,7 +1,4 @@
-import uuid
-
 from django.db import models
-from django.conf import settings
 
 from products.models import (
     Material,
@@ -17,17 +14,9 @@ from products.models import (
     RugsMatFloorProducts,
     SecurityProtectionProducts,
 )
-from .utils import checkWishOwner
 
-
-class Customer(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True)
-    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
-
-    def __str__(self):
-        return self.user.email
+from user_profiles.utils import checkWishOwner
+from user_profiles.models import Customer
 
 
 class WishItem(models.Model):
