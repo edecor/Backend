@@ -16,6 +16,7 @@ from .models import (
     ProductImage,
     Brand,
 )
+from user_profiles.admin import MaterialCommentAdmin
 
 from ckeditor.widgets import CKEditorWidget
 from django.db import models
@@ -129,7 +130,7 @@ class MaterialAdmin(admin.ModelAdmin):
     ]
     readonly_fields = ["uuid", "slug"]
 
-    inlines = [MaterialProductImageAdmin]
+    inlines = [MaterialProductImageAdmin, MaterialCommentAdmin]
 
     formfield_overrides = {
         models.TextField: {"widget": CKEditorWidget},
