@@ -1,7 +1,5 @@
-import uuid
-
 from django.db import models
-from django.conf import settings
+from versatileimagefield.fields import VersatileImageField
 
 from products.models import (
     Material,
@@ -17,21 +15,13 @@ from products.models import (
     RugsMatFloorProducts,
     SecurityProtectionProducts,
 )
-from .utils import checkWishOwner
+
+from user_profiles.models import Customer
+from user_profiles.utils import checkCommentOwner
 
 
-class Customer(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=50, null=True, blank=True)
-    last_name = models.CharField(max_length=50, null=True, blank=True)
-    uuid = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
-
-    def __str__(self):
-        return self.user.email
-
-
-class WishItem(models.Model):
-    class ProductWishOwner(models.TextChoices):
+class Comment(models.Model):
+    class CommentOwnerProduct(models.TextChoices):
         MATERIAL = "material"
         BATHROOM = "bathroom"
         DECORATIONS = "decorations"
@@ -47,9 +37,13 @@ class WishItem(models.Model):
 
     product_type = models.CharField(
         max_length=25,
-        choices=ProductWishOwner.choices,
-        default=ProductWishOwner.MATERIAL,
+        choices=CommentOwnerProduct.choices,
+        default=CommentOwnerProduct.MATERIAL,
     )
+
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+    comment_text = models.TextField()
 
     material = models.ForeignKey(
         Material, on_delete=models.CASCADE, blank=True, null=True
@@ -90,11 +84,8 @@ class WishItem(models.Model):
 
     class Meta:
         constraints = [
-            checkWishOwner(name="%(app_label)s_%(class)s_value_matches_type")
+            checkCommentOwner(name="%(app_label)s_%(class)s_value_matches_type")
         ]
-
-    def __str__(self):
-        return str(self.id)
 
     @property
     def owner(self):
@@ -120,14 +111,46 @@ class WishItem(models.Model):
             return self.rugs_mat
         if self.security_protection_id is not None:
             return self.security_protection
-
-
-class WishList(models.Model):
-    name = models.CharField(max_length=255)
-    date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now_add=True)
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    wishes = models.ManyToManyField(WishItem)
+        raise AssertionError("No owner for comment defined")
 
     def __str__(self):
-        return self.name
+        return str(self.id)
+
+
+def return_product_image_directory(instance, filename):
+    comment_instance = instance.comment
+    if isinstance(comment_instance.material, Material):
+        product_instance = comment_instance.material
+    if isinstance(comment_instance.bathroom, BathroomProducts):
+        product_instance = comment_instance.bathroom
+    if isinstance(comment_instance.decorations, DecorationsProducts):
+        product_instance = comment_instance.decorations
+    if isinstance(comment_instance.furniture, FurnitureProducts):
+        product_instance = comment_instance.furniture
+    if isinstance(comment_instance.fabric_textile, FabricTextileProducts):
+        product_instance = comment_instance.fabric_textile
+    if isinstance(comment_instance.hardware_tool, HardwareToolProducts):
+        product_instance = comment_instance.hardware_tool
+    if isinstance(comment_instance.home_appliances, HomeApplianceProducts):
+        product_instance = comment_instance.home_appliances
+    if isinstance(comment_instance.kitchen, KitchenProducts):
+        product_instance = comment_instance.kitchen
+    if isinstance(comment_instance.landscape_garden, LandscapeProducts):
+        product_instance = comment_instance.landscape_garden
+    if isinstance(comment_instance.light, LightProducts):
+        product_instance = comment_instance.light
+    if isinstance(comment_instance.rugs_mat, RugsMatFloorProducts):
+        product_instance = comment_instance.rugs_mat
+    if isinstance(comment_instance.security_protection, SecurityProtectionProducts):
+        product_instance = comment_instance.security_protection
+
+    return f"products/{product_instance.slug}/comments/{filename}"
+
+
+class CommentImage(models.Model):
+    src = VersatileImageField(upload_to=return_product_image_directory)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    alt = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.alt

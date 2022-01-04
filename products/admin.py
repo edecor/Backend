@@ -2,7 +2,6 @@ from django.contrib import admin
 from django.db.models import fields
 from .models import (
     Material,
-    Brand,
     BathroomProducts,
     DecorationsProducts,
     FabricTextileProducts,
@@ -15,11 +14,18 @@ from .models import (
     RugsMatFloorProducts,
     SecurityProtectionProducts,
     ProductImage,
+    Brand,
 )
+from user_profiles.admin import MaterialCommentAdmin
 
 from ckeditor.widgets import CKEditorWidget
 from django.db import models
 from django_json_widget.widgets import JSONEditorWidget
+
+
+@admin.register(Brand)
+class BrandAdmin(admin.ModelAdmin):
+    pass
 
 
 @admin.register(ProductImage)
@@ -104,10 +110,28 @@ class MaterialAdmin(admin.ModelAdmin):
     list_display = ["name", "price", "available", "created", "updated"]
     list_filter = ["available", "created", "updated"]
     list_editable = ["price", "available"]
+    fields = [
+        "name",
+        "slug",
+        "description",
+        "price",
+        "available",
+        "uuid",
+        "additional_fields",
+        "place_of_origin",
+        "color",
+        "material_place",
+        "material_category",
+        "rooms",
+        "thickness",
+        "size",
+        "shape",
+        "density",
+    ]
+    readonly_fields = ["uuid", "slug"]
 
+    # inlines = [MaterialProductImageAdmin, MaterialCommentAdmin]
     inlines = [MaterialProductImageAdmin]
-
-    readonly_fields = ("uuid", "slug")
 
     formfield_overrides = {
         models.TextField: {"widget": CKEditorWidget},
