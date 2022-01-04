@@ -1,6 +1,15 @@
 from django.contrib import admin
 
-from .models import WishItem, WishList, Customer, Comment
+from .models import WishItem, WishList, Customer, Comment, CommentImage
+
+
+@admin.register(CommentImage)
+class CommentImageAdmin(admin.ModelAdmin):
+    pass
+
+
+class CommentImageInlineAdmin(admin.TabularInline):
+    model = CommentImage
 
 
 @admin.register(WishItem)
@@ -21,7 +30,7 @@ class CustomerAdmin(admin.ModelAdmin):
 
 @admin.register(Comment)
 class CommentAdmin(admin.ModelAdmin):
-    pass
+    inlines = [CommentImageInlineAdmin]
 
 
 class MaterialCommentAdmin(admin.TabularInline):

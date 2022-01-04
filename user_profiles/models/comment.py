@@ -1,4 +1,5 @@
 from django.db import models
+from versatileimagefield.fields import VersatileImageField
 
 from products.models import (
     Material,
@@ -41,6 +42,8 @@ class Comment(models.Model):
     )
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+    comment_text = models.TextField()
 
     material = models.ForeignKey(
         Material, on_delete=models.CASCADE, blank=True, null=True
@@ -112,3 +115,42 @@ class Comment(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+def return_product_image_directory(instance, filename):
+    comment_instance = instance.comment
+    if isinstance(comment_instance.material, Material):
+        product_instance = comment_instance.material
+    if isinstance(comment_instance.bathroom, BathroomProducts):
+        product_instance = comment_instance.bathroom
+    if isinstance(comment_instance.decoration, DecorationsProducts):
+        product_instance = comment_instance.decoration
+    if isinstance(comment_instance.furniture, FurnitureProducts):
+        product_instance = comment_instance.furniture
+    if isinstance(comment_instance.fabric_textile, FabricTextileProducts):
+        product_instance = comment_instance.fabric_textile
+    if isinstance(comment_instance.hardware_tool, HardwareToolProducts):
+        product_instance = comment_instance.hardware_tool
+    if isinstance(comment_instance.home_appliances, HomeApplianceProducts):
+        product_instance = comment_instance.home_appliances
+    if isinstance(comment_instance.kitchen, KitchenProducts):
+        product_instance = comment_instance.kitchen
+    if isinstance(comment_instance.landscape_garden, LandscapeProducts):
+        product_instance = comment_instance.landscape_garden
+    if isinstance(comment_instance.lights, LightProducts):
+        product_instance = comment_instance.lights
+    if isinstance(comment_instance.rugs_mat, RugsMatFloorProducts):
+        product_instance = comment_instance.rugs_mat
+    if isinstance(comment_instance.security_protection, SecurityProtectionProducts):
+        product_instance = comment_instance.security_protection
+
+    return f"products/{product_instance.slug}/comments/{filename}"
+
+
+class CommentImage(models.Model):
+    src = VersatileImageField(upload_to=return_product_image_directory)
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE)
+    alt = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.alt
