@@ -2,7 +2,19 @@ from collections import OrderedDict
 
 from rest_framework import serializers
 from .models import Material, ProductImage
-from user_profiles.models import Comment
+from user_profiles.models import Comment, CommentImage
+
+# Serializers for comments
+class CommentImageSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        result = super().to_representation(instance)
+        return OrderedDict(
+            [(key, result[key]) for key in result if result[key] is not None]
+        )
+
+    class Meta:
+        model = CommentImage
+        fields = ["id", "src", "alt"]
 
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -12,16 +24,19 @@ class CommentSerializer(serializers.ModelSerializer):
             [(key, result[key]) for key in result if result[key] is not None]
         )
 
+    images = CommentImageSerializer(many=True, source="commentimage_set")
+
     class Meta:
         model = Comment
         fields = [
             "customer",
-            "commentimage_set",
+            "images",
             "comment_text",
         ]
         depth = 1
 
 
+# Serializers for Products
 class ProductImageSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         result = super().to_representation(instance)
