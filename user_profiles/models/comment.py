@@ -123,8 +123,8 @@ def return_product_image_directory(instance, filename):
         product_instance = comment_instance.material
     if isinstance(comment_instance.bathroom, BathroomProducts):
         product_instance = comment_instance.bathroom
-    if isinstance(comment_instance.decoration, DecorationsProducts):
-        product_instance = comment_instance.decoration
+    if isinstance(comment_instance.decorations, DecorationsProducts):
+        product_instance = comment_instance.decorations
     if isinstance(comment_instance.furniture, FurnitureProducts):
         product_instance = comment_instance.furniture
     if isinstance(comment_instance.fabric_textile, FabricTextileProducts):
@@ -137,8 +137,8 @@ def return_product_image_directory(instance, filename):
         product_instance = comment_instance.kitchen
     if isinstance(comment_instance.landscape_garden, LandscapeProducts):
         product_instance = comment_instance.landscape_garden
-    if isinstance(comment_instance.lights, LightProducts):
-        product_instance = comment_instance.lights
+    if isinstance(comment_instance.light, LightProducts):
+        product_instance = comment_instance.light
     if isinstance(comment_instance.rugs_mat, RugsMatFloorProducts):
         product_instance = comment_instance.rugs_mat
     if isinstance(comment_instance.security_protection, SecurityProtectionProducts):

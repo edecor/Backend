@@ -3,7 +3,7 @@ from collections import OrderedDict
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 
-from .models import Customer, WishItem, WishList
+from .models import Customer, WishItem, WishList, Comment
 from products.serializers import MaterialSerializer
 
 custom_user_model = get_user_model()
@@ -90,3 +90,20 @@ class WishListSerializer(serializers.ModelSerializer):
     class Meta:
         model = WishList
         fields = ["name", "date_modified", "customer", "wishes"]
+
+
+class CommentSerializer(serializers.ModelSerializer):
+    def to_representation(self, instance):
+        result = super().to_representation(instance)
+        return OrderedDict(
+            [(key, result[key]) for key in result if result[key] is not None]
+        )
+
+    class Meta:
+        model = Comment
+        fields = [
+            "customer",
+            "commentimage_set",
+            "comment_text",
+        ]
+        depth = 1
