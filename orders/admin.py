@@ -3,7 +3,7 @@ from django.contrib import admin
 from .models import Order, OrderItem
 
 
-class OrderItemInlineAdmin(admin.TabularInline):
+class OrderItemInlineAdmin(admin.StackedInline):
     model = OrderItem
 
 
