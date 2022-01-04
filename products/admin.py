@@ -130,7 +130,8 @@ class MaterialAdmin(admin.ModelAdmin):
     ]
     readonly_fields = ["uuid", "slug"]
 
-    inlines = [MaterialProductImageAdmin, MaterialCommentAdmin]
+    # inlines = [MaterialProductImageAdmin, MaterialCommentAdmin]
+    inlines = [MaterialProductImageAdmin]
 
     formfield_overrides = {
         models.TextField: {"widget": CKEditorWidget},
